@@ -94,6 +94,10 @@ namespace DynamicBlogProjectMY.Controllers
         [HttpPost]
         public IActionResult EditBlog(Blog p)
         {
+            p.WriterID = 1;
+            p.BlogCreateDate = DateTime.Parse(DateTime.Now.ToShortDateString());
+            p.BlogStatus = true;
+            bm.TUpdate(p);
             return RedirectToAction("BlogListByWriter");
         }
     }
