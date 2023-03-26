@@ -1,10 +1,16 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using BusinessLayer.Concrete;
+using BusinessLayer.ValidationRules;
+using DataAccessLayer.EntityFramework;
+using EntityLayer.Concrete;
+using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DynamicBlogProjectMY.Controllers
 {
     public class WriterController : Controller
     {
+        WriterManager wm = new WriterManager(new EfWriterRepository());
         public IActionResult Index()
         {
             return View();
@@ -35,6 +41,34 @@ namespace DynamicBlogProjectMY.Controllers
         public PartialViewResult WriterFooterPartial()
         {
             return PartialView();
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult WriterEditProfile()
+        {
+            var writerValues = wm.TGetById(1);
+            return View(writerValues);
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult WriterEditProfile(Writer p)
+        {
+            WriterValidator wl = new WriterValidator();
+            ValidationResult results = wl.Validate(p);
+            if (results.IsValid)
+            {
+                wm.TUpdate(p);
+                return RedirectToAction("Index", "Dashboard");
+            }
+            else
+            {
+                foreach (var item in results.Errors)
+                {
+                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                }
+            }
+            return View();
         }
     }
 }
