@@ -25,7 +25,7 @@ namespace DynamicBlogProjectMY.Controllers
             {
                 p.WriterStatus = true;
                 p.WriterAbout = "Deneme GetListWithCategoryByWriterBm";
-                wm.WriterAdd(p);
+                wm.TAdd(p);
                 return RedirectToAction("Index", "Blog");
             }
             else
