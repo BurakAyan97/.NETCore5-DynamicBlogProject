@@ -1,10 +1,13 @@
 ﻿using BusinessLayer.Concrete;
 using BusinessLayer.ValidationRules;
 using DataAccessLayer.EntityFramework;
+using DynamicBlogProjectMY.Models;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.IO;
 
 namespace DynamicBlogProjectMY.Controllers
 {
@@ -69,6 +72,36 @@ namespace DynamicBlogProjectMY.Controllers
                 }
             }
             return View();
+        }
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult WriterAdd()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult WriterAdd(AddProfileImage p)
+        {
+            Writer w = new Writer();
+            if (p.WriterImage != null)
+            {
+                var extension = Path.GetExtension(p.WriterImage.FileName);
+                var newImageName = Guid.NewGuid() + extension;
+                var location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/WriterImageFiles/", newImageName);
+                var stream = new FileStream(location, FileMode.Create);
+                p.WriterImage.CopyTo(stream);
+                w.WriterName = newImageName;
+            }
+            w.WriterMail = p.WriterMail;
+            w.WriterName=p.WriterName;
+            w.WriterPassword = p.WriterPassword;
+            w.WriterStatus = p.WriterStatus;
+            w.WriterAbout = p.WriterAbout;
+            wm.TAdd(w);
+            return RedirectToAction("Index", "Dashboard");
+
         }
     }
 }
