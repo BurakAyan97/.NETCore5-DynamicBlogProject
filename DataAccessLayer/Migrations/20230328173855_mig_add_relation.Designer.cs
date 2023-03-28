@@ -4,14 +4,16 @@ using DataAccessLayer.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20230328173855_mig_add_relation")]
+    partial class mig_add_relation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -270,10 +272,16 @@ namespace DataAccessLayer.Migrations
                     b.Property<bool>("MessageStatus")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("ReceiverID")
+                    b.Property<int?>("Receiver")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SenderID")
+                    b.Property<int>("ReceiverID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Sender")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SenderID")
                         .HasColumnType("int");
 
                     b.Property<string>("Subject")
@@ -430,11 +438,13 @@ namespace DataAccessLayer.Migrations
                 {
                     b.HasOne("EntityLayer.Concrete.Writer", "ReceiverUser")
                         .WithMany("WriterReceiver")
-                        .HasForeignKey("ReceiverID");
+                        .HasForeignKey("ReceiverID")
+                        .IsRequired();
 
                     b.HasOne("EntityLayer.Concrete.Writer", "SenderUser")
                         .WithMany("WriterSender")
-                        .HasForeignKey("SenderID");
+                        .HasForeignKey("SenderID")
+                        .IsRequired();
 
                     b.Navigation("ReceiverUser");
 
