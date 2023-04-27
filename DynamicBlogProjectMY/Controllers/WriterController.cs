@@ -1,21 +1,38 @@
 ﻿using BusinessLayer.Concrete;
 using BusinessLayer.ValidationRules;
+using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using DynamicBlogProjectMY.Models;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace DynamicBlogProjectMY.Controllers
 {
     public class WriterController : Controller
     {
+        //private readonly UserManager<AppUser> _userManager;
+        Context c = new Context();
+
         WriterManager wm = new WriterManager(new EfWriterRepository());
+
+        //public WriterController(UserManager<AppUser> signInManager)
+        //{
+        //    _userManager = signInManager;
+        //}
         public IActionResult Index()
         {
+            var usermail = User.Identity.Name;
+            ViewBag.mailName = usermail;
+
+            var writerName = c.Writers.Where(x => x.WriterMail == usermail).Select(y => y.WriterName).FirstOrDefault();
+            ViewBag.writerName = writerName;
+
             return View();
         }
 
@@ -46,14 +63,15 @@ namespace DynamicBlogProjectMY.Controllers
             return PartialView();
         }
 
-        [AllowAnonymous]
         [HttpGet]
         public IActionResult WriterEditProfile()
         {
-            var writerValues = wm.TGetById(1);
+            Context c = new Context();
+            var usermail = User.Identity.Name;
+            var writerID = c.Writers.Where(x => x.WriterMail == usermail).Select(y => y.WriterID).FirstOrDefault();
+            var writerValues = wm.TGetById(writerID);
             return View(writerValues);
         }
-        [AllowAnonymous]
         [HttpPost]
         public IActionResult WriterEditProfile(Writer p)
         {
@@ -95,7 +113,7 @@ namespace DynamicBlogProjectMY.Controllers
                 w.WriterName = newImageName;
             }
             w.WriterMail = p.WriterMail;
-            w.WriterName=p.WriterName;
+            w.WriterName = p.WriterName;
             w.WriterPassword = p.WriterPassword;
             w.WriterStatus = p.WriterStatus;
             w.WriterAbout = p.WriterAbout;

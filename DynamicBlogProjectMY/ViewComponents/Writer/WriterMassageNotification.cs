@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DynamicBlogProjectMY.ViewComponents.Writer
 {
-    public class WriterMessageNotification : ViewComponent
+    public class WriterMassageNotification : ViewComponent
     {
         Message2Manager mm = new Message2Manager(new EfMessage2Repository());
         public IViewComponentResult Invoke()

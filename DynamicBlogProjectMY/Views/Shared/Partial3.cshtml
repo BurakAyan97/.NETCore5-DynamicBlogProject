@@ -2,22 +2,26 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-4 footer-grid-agileits-w3ls text-left">
-                <h3>HakkımızdaS</h3>
-                <p>Blog, genellikle güncelden eskiye doğru sıralanmış yazı ve yorumların yayınlanıdğı , web tabanlı bir yayını belirtir... Blog, genellikle güncelden eskiye doğru sıralanmış yazı ve yorumların yayınlanıdğı , web tabanlı bir yayını belirtir... Blog, genellikle güncelden eskiye doğru sıralanmış yazı ve yorumların yayınlanıdğı , web tabanlı bir yayını belirtir...</p>
+                <h2> Hakkımızda </h2>
+                <h6 class="text-white-50">Her hikayenin bir başlangıcı vardır. İşletmenizin ne zaman, nerede ve nasıl hayata geçtiğini öğrenmek müşterilerinizin hoşuna gidecektir. Bürokratik süreciniz veya iş fikrinizin bugünlere gelişini anlatarak okuyucularınıza farklı ufuklar açabilirsiniz. Eğer..</h6>
                 <div class="read">
-                    <a href="/About/Index/" class="btn btn-primary read-m">Devamını Oku</a>
+                    <a href="/About/Index/" class="btn btn-primary read-m">Devamını  Oku...</a>
                 </div>
             </div>
             <div class="col-lg-4 footer-grid-agileits-w3ls text-left">
-               
-                @await Component.InvokeAsync("BlogLast3Post")
 
+                @await Component.InvokeAsync("BlogLast3Post")
             </div>
             <!-- subscribe -->
-            <div class="col-lg-4 subscribe-main footer-grid-agileits-w3ls text-left">
-                <h2>Mail bültenine abone olun.</h2>
-                @await Html.PartialAsync("~/Views/NewsLetter/SubscribeMail.cshtml")
-                <!-- //subscribe -->
+            <div class="tech-btm">
+                <h4 class="text-light"> Haber bültenimize kaydolun </h4>
+
+                <h6 class="text-success"> <b> Yazılım, Teknoloji, Sanat ve diğer bloglar... </b>   </h6>
+                <form action="/NewsLetter/SubscribeMail/" method="post">
+                    <input type="email" placeholder="Email" required="" name="Mail">
+                    <input type="submit" value="Abone Ol">
+                </form>
+
             </div>
         </div>
         <!-- footer -->
@@ -26,27 +30,27 @@
                 <div class="copyrighttop">
                     <ul>
                         <li class="mx-3">
-                            <a class="facebook" href="#">
-                                <i class="fab fa-facebook-f"></i>
-                                <span>Facebook</span>
+                            <a class="" href="https://www.instagram.com/smtcoder/">
+                                <i class="fab fa-instagram"></i>
+                                <span>instagram</span>
                             </a>
                         </li>
                         <li>
-                            <a class="facebook" href="#">
-                                <i class="fab fa-twitter"></i>
-                                <span>Twitter</span>
+                            <a class="btn-github" href="https://github.com/smtdeveloper">
+                                <i class="fab fa-github"></i>
+                                <span>Github</span>
                             </a>
                         </li>
                         <li class="mx-3">
-                            <a class="facebook" href="#">
-                                <i class="fab fa-google-plus-g"></i>
-                                <span>Google+</span>
+                            <a class="instagram" href="https://www.linkedin.com/in/samet-akca-2a4bbb1a8/">
+                                <i class="fab fa-linkedin"></i>
+                                <span>linkedin</span>
                             </a>
                         </li>
-                        <li>
-                            <a class="facebook" href="#">
-                                <i class="fab fa-pinterest-p"></i>
-                                <span>Pinterest</span>
+                        <li class="mx-3">
+                            <a class="instagram" href="https://www.youtube.com/channel/UCZXmqpZJ3ax5Uzm0pXeVqMg/featured">
+                                <i class="fab fa-youtube"></i>
+                                <span>youtube</span>
                             </a>
                         </li>
                     </ul>
@@ -54,10 +58,10 @@
                 </div>
             </div>
             <div class="w3layouts-agile-copyrightbottom">
-                <p>
-                    © @DateTime.Now.Year Asp.Net COre 5.0 Proje Kampı Tüm Hakları Saklıdır | Design by
-                    <a href="http://w3layouts.com/">W3layouts</a>
-                </p>
+                <h6 class="text-white-50">
+                    © @DateTime.Now.Year  Samet Akca  | Asp.Net Core 5.0 Projesi -
+                    <a class="text-success" href="https://www.instagram.com/smtcoder/">  SMTcoder</a>
+                </h6>
 
             </div>
         </div>
